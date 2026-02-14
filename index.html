@@ -22,21 +22,10 @@
             display: flex; justify-content: center; align-items: center;
         }
 
-        /* Start Overlay */
         #overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--pink-light); z-index: 2000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center;
-        }
-
-        .heart-float {
-            position: absolute; pointer-events: none; z-index: -1;
-            animation: floatUp 4.5s linear forwards; font-size: 24px;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(110vh) scale(0.5); opacity: 1; }
-            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
 
         .window {
@@ -46,12 +35,7 @@
             position: relative; z-index: 10;
         }
 
-        .pixel-bunny {
-            width: 140px; margin-bottom: 20px;
-            image-rendering: pixelated;
-        }
-
-        h1 { font-size: 14px; color: var(--pink-dark); line-height: 1.6; margin-bottom: 20px; position: relative; z-index: 20; }
+        .pixel-bunny { width: 140px; margin-bottom: 20px; image-rendering: pixelated; }
 
         .btn-wrap {
             display: flex; justify-content: center; align-items: center;
@@ -65,20 +49,13 @@
             box-shadow: 4px 4px 0px var(--pink-main);
         }
 
-        /* YES button that eventually covers everything */
         #yes-btn {
             background: #b7e4c7; color: #2d6a4f;
-            transition: transform 0.15s ease-out, background-color 0.3s;
+            transition: all 0.3s ease-out; /* Slower transition */
             min-width: 120px;
-            position: relative;
-            display: flex; justify-content: center; align-items: center;
         }
 
-        #no-btn {
-            background: white; color: var(--pink-dark);
-            position: absolute; transition: 0.1s;
-            z-index: 150;
-        }
+        #no-btn { background: white; color: var(--pink-dark); position: absolute; z-index: 150; }
 
         .hidden { display: none; }
         #youtube-player { position: absolute; top: -9999px; left: -9999px; }
@@ -87,7 +64,7 @@
 <body>
 
     <div id="overlay">
-        <img src="https://media.giphy.com/media/12BnpAj99ezEEY5wEg/giphy.gif" style="width: 120px; margin-bottom: 20px;">
+        <img src="https://media.giphy.com/media/12BnpAj99ezEEY5wEg/giphy.gif" style="width: 100px; margin-bottom: 20px;">
         <p style="font-size: 10px; margin-bottom: 20px;">A small gift from your girl...</p>
         <button onclick="startGame()" style="background: var(--pink-dark); color: white;">OPEN 💌</button>
     </div>
@@ -97,8 +74,7 @@
     <div class="window">
         <div id="game-ui">
             <img src="https://media.giphy.com/media/12BnpAj99ezEEY5wEg/giphy.gif" class="pixel-bunny">
-            <h1>Will you be my Valentine?</h1>
-            
+            <h1 style="font-size: 14px; color: var(--pink-dark);">Will you be my Valentine?</h1>
             <div class="btn-wrap">
                 <button id="yes-btn">YES</button>
                 <button id="no-btn">NO</button>
@@ -107,12 +83,9 @@
 
         <div id="success-ui" class="hidden">
             <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJqZ3R3eGd4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCH/4asRlBKdJaPeBahjcL/giphy.gif" class="pixel-bunny">
-            <h1 style="color: #ff4d6d;">I WANNA BE YOURS! ❤️</h1>
-            <p style="font-size: 10px; line-height: 2; color: #555;">
-                I love you more than words can say.<br>
-                Happy Valentine's Day, my favorite boy! ✨
-            </p>
-            <button onclick="location.reload()" style="font-size: 8px; background: white; margin-top: 25px; padding: 10px;">REPLAY</button>
+            <h1 style="color: #ff4d6d; font-size: 14px;">I WANNA BE YOURS! ❤️</h1>
+            <p style="font-size: 10px; line-height: 2;">Happy Valentine's Day, my favorite boy! ✨</p>
+            <button onclick="location.reload()" style="font-size: 8px; background: white; margin-top: 15px;">REPLAY</button>
         </div>
     </div>
 
@@ -121,38 +94,38 @@
         let player;
         const yesBtn = document.getElementById('yes-btn');
         const noBtn = document.getElementById('no-btn');
-        let yesScale = 1;
+        let noCount = 0;
 
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
                 height: '0', width: '0',
-                videoId: '39ov-z5GHWg', 
+                videoId: '39ov-z5GHWg',
                 events: { 'onReady': onPlayerReady }
             });
         }
-
-        function onPlayerReady(event) { /* Ready */ }
+        function onPlayerReady(event) {}
 
         function startGame() {
             document.getElementById('overlay').style.display = 'none';
             if (player) player.playVideo();
-            setInterval(createHeart, 300);
         }
 
         function moveNo() {
-            // Move NO button
+            noCount++;
+            
+            // Move No Button
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
 
-            // Grow YES button aggressively
-            yesScale += 0.9;
-            yesBtn.style.transform = `scale(${yesScale})`;
+            // Gradual Growth Logic
+            let scaleValue = 1 + (noCount * 0.15); // Much smaller growth increments
+            yesBtn.style.transform = `scale(${scaleValue})`;
 
-            // Full screen takeover logic
-            if (yesScale > 4) {
+            // Only go full screen after 12 tries
+            if (noCount >= 12) {
                 yesBtn.innerText = "SAY YES!";
                 yesBtn.style.position = "fixed";
                 yesBtn.style.top = "0";
@@ -161,8 +134,8 @@
                 yesBtn.style.height = "100vh";
                 yesBtn.style.transform = "none";
                 yesBtn.style.zIndex = "1000";
-                yesBtn.style.borderRadius = "0";
-                yesBtn.style.fontSize = "40px";
+                yesBtn.style.display = "flex";
+                yesBtn.style.fontSize = "30px";
             }
         }
 
@@ -173,17 +146,7 @@
             document.getElementById('game-ui').classList.add('hidden');
             document.getElementById('success-ui').classList.remove('hidden');
             yesBtn.style.display = 'none';
-            for(let i=0; i<60; i++) setTimeout(createHeart, i * 30);
         });
-
-        function createHeart() {
-            const heart = document.createElement('div');
-            heart.classList.add('heart-float');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 4500);
-        }
     </script>
 </body>
 </html>
