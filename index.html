@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Favorite Person 💖</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink-light: #ffeef2;
+            --pink-main: #ffb7c5;
+            --pink-dark: #ff85a1;
+            --white: #ffffff;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--pink-light);
+            background-image: radial-gradient(var(--pink-main) 0.8px, transparent 0.8px);
+            background-size: 30px 30px;
+            font-family: 'Press Start 2P', cursive;
+            overflow: hidden;
+            color: #d63384;
+        }
+
+        /* Music Toggle */
+        #music-control {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border: 3px solid var(--pink-dark);
+            padding: 10px;
+            cursor: pointer;
+            z-index: 100;
+            font-size: 10px;
+        }
+
+        /* Floating Hearts */
+        .heart {
+            position: absolute;
+            color: var(--pink-dark);
+            font-size: 1.5rem;
+            pointer-events: none;
+            z-index: -1;
+            animation: float Up 5s linear forwards;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* The Game Window */
+        .window {
+            background: var(--white);
+            border: 5px solid #ff85a1;
+            box-shadow: 8px 8px 0px #ffb7c5;
+            width: 90%;
+            max-width: 400px;
+            padding: 25px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 3px solid var(--pink-light);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 10px;
+        }
+
+        .pixel-cat {
+            font-size: 70px;
+            margin: 20px 0;
+            display: inline-block;
+            animation: wiggle 2s ease-in-out infinite;
+        }
+
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.1); }
+        }
+
+        h1 { font-size: 14px; line-height: 1.8; margin-bottom: 30px; }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            height: 50px;
+            position: relative;
+        }
+
+        button {
+            font-family: 'Press Start 2P', cursive;
+            padding: 10px 15px;
+            border: 3px solid #ff85a1;
+            cursor: pointer;
+            font-size: 12px;
+            background: white;
+        }
+
+        #yes-btn { background: #ff85a1; color: white; transition: 0.2s; }
+        #yes-btn:hover { background: #d63384; transform: scale(1.1); }
+
+        #no-btn { position: absolute; }
+
+        /* Success State */
+        .hidden { display: none; }
+        .celebration-text { font-size: 10px; line-height: 2; margin-top: 20px; }
+
+    </style>
+</head>
+<body>
+
+    <button id="music-control">🎵 Play Music</button>
+
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="window">
+        <div class="header">
+            <span>LOVE_v1.0</span>
+            <span>_ □ x</span>
+        </div>
+
+        <div id="main-content">
+            <div class="pixel-cat">🐱❤️</div>
+            <h1>Will you be my Valentine?</h1>
+            <div class="btn-container">
+                <button id="yes-btn">YES</button>
+                <button id="no-btn">NO</button>
+            </div>
+        </div>
+
+        <div id="success-content" class="hidden">
+            <div class="pixel-cat">😻✨</div>
+            <h1>YAY!!</h1>
+            <p style="font-size: 12px;">I love you more than all the pixels in the world!</p>
+            <div class="celebration-text">
+                Happy Valentine's Day! <br>
+                You're my favorite player. ❤️
+            </div>
+            <button onclick="location.reload()" style="margin-top:20px; font-size:8px;">PLAY AGAIN</button>
+        </div>
+    </div>
+
+    <script>
+        const noBtn = document.getElementById('no-btn');
+        const yesBtn = document.getElementById('yes-btn');
+        const mainContent = document.getElementById('main-content');
+        const successContent = document.getElementById('success-content');
+        const musicBtn = document.getElementById('music-control');
+        const music = document.getElementById('bg-music');
+
+        // 1. Music Toggle
+        musicBtn.addEventListener('click', () => {
+            if (music.paused) {
+                music.play();
+                musicBtn.innerText = "⏸ Pause Music";
+            } else {
+                music.pause();
+                musicBtn.innerText = "🎵 Play Music";
+            }
+        });
+
+        // 2. The Evasive "NO" Button
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', moveButton); // For mobile
+
+        function moveButton() {
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+        }
+
+        // 3. The "YES" Explosion
+        yesBtn.addEventListener('click', () => {
+            mainContent.classList.add('hidden');
+            successContent.classList.remove('hidden');
+            
+            // Start heart shower
+            setInterval(createHeart, 100);
+        });
+
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(heart);
+            setTimeout(() => heart.remove(), 5000);
+        }
+    </script>
+</body>
+</html>
