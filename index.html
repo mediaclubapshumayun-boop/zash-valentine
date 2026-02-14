@@ -16,7 +16,7 @@
             margin: 0; padding: 0; height: 100%;
             background-color: var(--pink-light);
             background-image: radial-gradient(var(--pink-main) 0.8px, transparent 0.8px);
-            background-size: 25px 25px;
+            background-size: 25px(25px);
             font-family: 'Press Start 2P', cursive;
             overflow: hidden;
             display: flex; justify-content: center; align-items: center;
@@ -29,25 +29,31 @@
             text-align: center;
         }
 
+        /* The main window no longer hides the button */
         .window {
             background: white; border: 6px solid var(--pink-dark);
             box-shadow: 12px 12px 0px var(--pink-main);
             width: 90%; max-width: 450px; padding: 30px; text-align: center;
-            position: relative; z-index: 10;
-            /* REMOVED overflow: hidden so the button can be seen outside the box */
+            position: relative; 
+            z-index: 10;
+            /* overflow is VISIBLE so button can go outside the box */
+            overflow: visible; 
         }
 
         .pixel-bunny { width: 120px; margin-bottom: 20px; image-rendering: pixelated; }
 
         .btn-wrap {
             display: flex; justify-content: center; align-items: center;
-            gap: 20px; min-height: 250px; position: relative;
+            gap: 20px; min-height: 200px; 
+            position: relative;
+            /* Ensure the wrap doesn't clip the button either */
+            overflow: visible; 
         }
 
         button {
             font-family: 'Press Start 2P', cursive;
             border: 4px solid var(--pink-dark);
-            cursor: pointer; padding: 15px; z-index: 100;
+            cursor: pointer; padding: 15px; 
             box-shadow: 4px 4px 0px var(--pink-main);
         }
 
@@ -55,10 +61,12 @@
             background: #b7e4c7; color: #2d6a4f;
             transition: transform 0.3s ease-out;
             min-width: 100px;
-            white-space: nowrap; /* Keeps text on one line */
+            white-space: nowrap;
+            position: relative;
+            z-index: 500; /* Keeps it above the window borders */
         }
 
-        #no-btn { background: white; color: var(--pink-dark); position: absolute; z-index: 150; }
+        #no-btn { background: white; color: var(--pink-dark); position: absolute; z-index: 600; }
 
         .hidden { display: none; }
         #youtube-player { position: absolute; top: -9999px; left: -9999px; }
@@ -116,17 +124,16 @@
 
         function moveNo() {
             noCount++;
-            
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
 
-            yesScale += 0.15; 
+            yesScale += 0.2; 
             yesBtn.style.transform = `scale(${yesScale})`;
 
-            if (noCount >= 8) {
+            if (noCount >= 6) {
                 yesBtn.innerText = "SAY YES!";
             }
         }
