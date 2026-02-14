@@ -3,195 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Favorite Person 💖</title>
+    <title>For My Bunny 🐰💖</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
-            --pink-light: #ffeef2;
+            --pink-light: #fff0f3;
             --pink-main: #ffb7c5;
-            --pink-dark: #ff85a1;
-            --white: #ffffff;
+            --pink-dark: #ff4d6d;
+            --mint: #b7e4c7;
         }
 
-        body {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        body, html {
+            margin: 0; padding: 0; height: 100%;
             background-color: var(--pink-light);
             background-image: radial-gradient(var(--pink-main) 0.8px, transparent 0.8px);
-            background-size: 30px 30px;
+            background-size: 25px 25px;
             font-family: 'Press Start 2P', cursive;
             overflow: hidden;
-            color: #d63384;
+            display: flex; justify-content: center; align-items: center;
         }
 
-        /* Music Toggle */
-        #music-control {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: white;
-            border: 3px solid var(--pink-dark);
-            padding: 10px;
-            cursor: pointer;
-            z-index: 100;
-            font-size: 10px;
+        /* Start Overlay */
+        #overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--pink-light); z-index: 1000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            text-align: center; padding: 20px;
         }
 
         /* Floating Hearts */
         .heart {
-            position: absolute;
-            color: var(--pink-dark);
-            font-size: 1.5rem;
-            pointer-events: none;
-            z-index: -1;
-            animation: float Up 5s linear forwards;
+            position: absolute; pointer-events: none; z-index: -1;
+            animation: floatUp 4.5s linear forwards; font-size: 20px;
         }
-
         @keyframes floatUp {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+            0% { transform: translateY(110vh) scale(0.5); opacity: 1; }
+            100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
 
-        /* The Game Window */
+        /* Game Window */
         .window {
-            background: var(--white);
-            border: 5px solid #ff85a1;
-            box-shadow: 8px 8px 0px #ffb7c5;
-            width: 90%;
-            max-width: 400px;
-            padding: 25px;
-            text-align: center;
-            position: relative;
+            background: white; border: 6px solid var(--pink-dark);
+            box-shadow: 12px 12px 0px var(--pink-main);
+            width: 90%; max-width: 450px; padding: 30px; text-align: center;
+            position: relative; z-index: 10;
         }
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 3px solid var(--pink-light);
-            padding-bottom: 10px;
-            margin-bottom: 20px;
-            font-size: 10px;
+        .pixel-bunny {
+            width: 140px; margin-bottom: 20px;
+            image-rendering: pixelated;
         }
 
-        .pixel-cat {
-            font-size: 70px;
-            margin: 20px 0;
-            display: inline-block;
-            animation: wiggle 2s ease-in-out infinite;
-        }
+        h1 { font-size: 14px; color: var(--pink-dark); line-height: 1.6; margin-bottom: 30px; }
 
-        @keyframes wiggle {
-            0%, 100% { transform: rotate(-5deg) scale(1); }
-            50% { transform: rotate(5deg) scale(1.1); }
-        }
-
-        h1 { font-size: 14px; line-height: 1.8; margin-bottom: 30px; }
-
-        .btn-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            height: 50px;
-            position: relative;
+        .btn-wrap {
+            display: flex; justify-content: center; align-items: center;
+            gap: 20px; min-height: 200px; position: relative;
         }
 
         button {
             font-family: 'Press Start 2P', cursive;
-            padding: 10px 15px;
-            border: 3px solid #ff85a1;
-            cursor: pointer;
-            font-size: 12px;
-            background: white;
+            border: 4px solid var(--pink-dark);
+            cursor: pointer; padding: 15px; z-index: 5;
+            box-shadow: 4px 4px 0px var(--pink-main);
         }
 
-        #yes-btn { background: #ff85a1; color: white; transition: 0.2s; }
-        #yes-btn:hover { background: #d63384; transform: scale(1.1); }
+        #yes-btn {
+            background: var(--mint); color: #2d6a4f;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            min-width: 100px;
+        }
 
-        #no-btn { position: absolute; }
+        #no-btn {
+            background: white; color: var(--pink-dark);
+            position: absolute; transition: 0.1s;
+        }
 
-        /* Success State */
         .hidden { display: none; }
-        .celebration-text { font-size: 10px; line-height: 2; margin-top: 20px; }
-
+        
+        #love-meter {
+            font-size: 10px; margin-top: 10px; color: var(--pink-dark);
+        }
     </style>
 </head>
 <body>
 
-    <button id="music-control">🎵 Play Music</button>
+    <div id="overlay">
+        <img src="https://media.giphy.com/media/12BnpAj99ezEEY5wEg/giphy.gif" style="width: 80px; margin-bottom: 20px;">
+        <p style="font-size: 10px; line-height: 2; margin-bottom: 30px;">
+            A special message from your girl...<br>
+            (Turn your volume up 🔊)
+        </p>
+        <button onclick="startGame()" style="background: var(--pink-dark); color: white;">ENTER 💌</button>
+    </div>
 
     <audio id="bg-music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
     </audio>
 
     <div class="window">
-        <div class="header">
-            <span>LOVE_v1.0</span>
-            <span>_ □ x</span>
-        </div>
-
-        <div id="main-content">
-            <div class="pixel-cat">🐱❤️</div>
+        <div id="game-ui">
+            <img src="https://media.giphy.com/media/12BnpAj99ezEEY5wEg/giphy.gif" class="pixel-bunny" alt="Cute Bunny">
             <h1>Will you be my Valentine?</h1>
-            <div class="btn-container">
+            
+            <div id="love-meter">Resistance: 0%</div>
+
+            <div class="btn-wrap">
                 <button id="yes-btn">YES</button>
                 <button id="no-btn">NO</button>
             </div>
         </div>
 
-        <div id="success-content" class="hidden">
-            <div class="pixel-cat">😻✨</div>
-            <h1>YAY!!</h1>
-            <p style="font-size: 12px;">I love you more than all the pixels in the world!</p>
-            <div class="celebration-text">
-                Happy Valentine's Day! <br>
-                You're my favorite partner. ❤️
+        <div id="success-ui" class="hidden">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJqZ3R3eGd4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCH/v4S8L8Y369XInH3-fW/giphy.gif" class="pixel-bunny">
+            <h1 style="color: #ff4d6d;">I WANNA BE YOURS! ❤️</h1>
+            <p style="font-size: 10px; line-height: 2; color: #555;">
+                I love you more than words can say. <br>
+                Happy Valentine's Day, my favorite human! ✨
+            </p>
+            <div style="margin: 20px; border: 3px dashed var(--pink-main); padding: 10px; font-size: 8px;">
+                [ Put your favorite memory or date here ]
             </div>
-            <button onclick="location.reload()" style="margin-top:20px; font-size:8px;">PLAY AGAIN</button>
+            <button onclick="location.reload()" style="font-size: 8px; background: white;">PLAY AGAIN</button>
         </div>
     </div>
 
     <script>
-        const noBtn = document.getElementById('no-btn');
         const yesBtn = document.getElementById('yes-btn');
-        const mainContent = document.getElementById('main-content');
-        const successContent = document.getElementById('success-content');
-        const musicBtn = document.getElementById('music-control');
+        const noBtn = document.getElementById('no-btn');
+        const overlay = document.getElementById('overlay');
         const music = document.getElementById('bg-music');
+        const meter = document.getElementById('love-meter');
+        
+        let yesSize = 1;
+        let noClicks = 0;
 
-        // 1. Music Toggle
-        musicBtn.addEventListener('click', () => {
-            if (music.paused) {
-                music.play();
-                musicBtn.innerText = "⏸ Pause Music";
-            } else {
-                music.pause();
-                musicBtn.innerText = "🎵 Play Music";
-            }
-        });
+        function startGame() {
+            overlay.style.display = 'none';
+            music.play();
+            setInterval(createHeart, 400);
+        }
 
-        // 2. The Evasive "NO" Button
-        noBtn.addEventListener('mouseover', moveButton);
-        noBtn.addEventListener('touchstart', moveButton); // For mobile
-
-        function moveButton() {
+        function moveNo() {
+            // Move No Button
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
+
+            // Grow Yes Button
+            yesSize += 0.5;
+            noClicks++;
+            yesBtn.style.transform = `scale(${yesSize})`;
+            
+            // Update Love Meter
+            meter.innerText = `Resistance: ${Math.min(noClicks * 10, 99)}%`;
+            
+            if(noClicks > 5) {
+                yesBtn.innerText = "JUST SAY YES!!";
+                yesBtn.style.backgroundColor = "#ff4d6d";
+                yesBtn.style.color = "white";
+            }
         }
 
-        // 3. The "YES" Explosion
+        noBtn.addEventListener('mouseover', moveNo);
+        noBtn.addEventListener('click', moveNo);
+
         yesBtn.addEventListener('click', () => {
-            mainContent.classList.add('hidden');
-            successContent.classList.remove('hidden');
+            document.getElementById('game-ui').classList.add('hidden');
+            document.getElementById('success-ui').classList.remove('hidden');
+            meter.classList.add('hidden');
             
-            // Start heart shower
-            setInterval(createHeart, 100);
+            // Heart shower explosion
+            for(let i=0; i<50; i++) {
+                setTimeout(createHeart, i * 40);
+            }
         });
 
         function createHeart() {
@@ -199,11 +186,10 @@
             heart.classList.add('heart');
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 5000);
+            setTimeout(() => heart.remove(), 4000);
         }
     </script>
 </body>
-
 </html>
