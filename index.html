@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Bunny 🐰💖</title>
+    <title>For My Favorite Boy 💖</title>
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root {
             --pink-light: #fff0f3;
             --pink-main: #ffb7c5;
             --pink-dark: #ff4d6d;
-            --mint: #b7e4c7;
         }
 
         body, html {
@@ -28,10 +27,9 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--pink-light); z-index: 1000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-            text-align: center; padding: 20px;
+            text-align: center;
         }
 
-        /* Floating Hearts */
         .heart {
             position: absolute; pointer-events: none; z-index: -1;
             animation: floatUp 4.5s linear forwards; font-size: 20px;
@@ -41,20 +39,20 @@
             100% { transform: translateY(-10vh) scale(1.5); opacity: 0; }
         }
 
-        /* Game Window */
         .window {
             background: white; border: 6px solid var(--pink-dark);
             box-shadow: 12px 12px 0px var(--pink-main);
             width: 90%; max-width: 450px; padding: 30px; text-align: center;
-            position: relative; z-index: 10;
+            position: relative; z-index: 10; overflow: hidden;
         }
 
+        /* Fixed Image: Using a reliable placeholder pixel bunny */
         .pixel-bunny {
-            width: 140px; margin-bottom: 20px;
+            width: 120px; height: 120px; margin-bottom: 20px;
             image-rendering: pixelated;
         }
 
-        h1 { font-size: 14px; color: var(--pink-dark); line-height: 1.6; margin-bottom: 30px; }
+        h1 { font-size: 14px; color: var(--pink-dark); line-height: 1.6; margin-bottom: 20px; position: relative; z-index: 20; }
 
         .btn-wrap {
             display: flex; justify-content: center; align-items: center;
@@ -64,13 +62,13 @@
         button {
             font-family: 'Press Start 2P', cursive;
             border: 4px solid var(--pink-dark);
-            cursor: pointer; padding: 15px; z-index: 5;
+            cursor: pointer; padding: 15px; z-index: 15;
             box-shadow: 4px 4px 0px var(--pink-main);
         }
 
         #yes-btn {
-            background: var(--mint); color: #2d6a4f;
-            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: #b7e4c7; color: #2d6a4f;
+            transition: transform 0.2s ease-out;
             min-width: 100px;
         }
 
@@ -80,34 +78,23 @@
         }
 
         .hidden { display: none; }
-        
-        #love-meter {
-            font-size: 10px; margin-top: 10px; color: var(--pink-dark);
-        }
     </style>
 </head>
 <body>
 
     <div id="overlay">
-        <img src="https://media.giphy.com/media/12BnpAj99ezEEY5wEg/giphy.gif" style="width: 80px; margin-bottom: 20px;">
-        <p style="font-size: 10px; line-height: 2; margin-bottom: 30px;">
-            A special message from your girl...<br>
-            (Turn your volume up 🔊)
-        </p>
-        <button onclick="startGame()" style="background: var(--pink-dark); color: white;">ENTER 💌</button>
+        <p style="font-size: 10px; margin-bottom: 20px;">Incoming Love Message...</p>
+        <button onclick="startGame()" style="background: var(--pink-dark); color: white;">OPEN 💌</button>
     </div>
 
     <audio id="bg-music" loop>
-        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3" type="audio/mpeg">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
     </audio>
 
     <div class="window">
         <div id="game-ui">
-            <img src="https://media.giphy.com/media/12BnpAj99ezEEY5wEg/giphy.gif" class="pixel-bunny" alt="Cute Bunny">
+            <img src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Y5Ym90anh6NGo1eXh6NHB6Ym90anh6NGo1eXh6NHB6Ym90anh6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1z/Y4S7S7Y8Y8Y8Y8Y8Y8Y/giphy.gif" class="pixel-bunny" alt="Bunny">
             <h1>Will you be my Valentine?</h1>
-            
-            <div id="love-meter">Resistance: 0%</div>
-
             <div class="btn-wrap">
                 <button id="yes-btn">YES</button>
                 <button id="no-btn">NO</button>
@@ -118,67 +105,47 @@
             <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJqZ3R3eGd4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCH/v4S8L8Y369XInH3-fW/giphy.gif" class="pixel-bunny">
             <h1 style="color: #ff4d6d;">I WANNA BE YOURS! ❤️</h1>
             <p style="font-size: 10px; line-height: 2; color: #555;">
-                I love you more than words can say. <br>
-                Happy Valentine's Day, my favorite human! ✨
+                You're the best boyfriend I could ask for.<br>
+                Happy Valentine's Day, my favorite boy! ✨
             </p>
             <div style="margin: 20px; border: 3px dashed var(--pink-main); padding: 10px; font-size: 8px;">
-                [ Put your favorite memory or date here ]
+                [ You are my favorite person in the whole world! ]
             </div>
-            <button onclick="location.reload()" style="font-size: 8px; background: white;">PLAY AGAIN</button>
+            <button onclick="location.reload()" style="font-size: 8px; background: white;">REPLAY</button>
         </div>
     </div>
 
     <script>
         const yesBtn = document.getElementById('yes-btn');
         const noBtn = document.getElementById('no-btn');
-        const overlay = document.getElementById('overlay');
         const music = document.getElementById('bg-music');
-        const meter = document.getElementById('love-meter');
-        
         let yesSize = 1;
-        let noClicks = 0;
 
         function startGame() {
-            overlay.style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
             music.play();
             setInterval(createHeart, 400);
         }
 
         function moveNo() {
-            // Move No Button
             const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
             const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
             noBtn.style.position = 'fixed';
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
 
-            // Grow Yes Button
-            yesSize += 0.5;
-            noClicks++;
+            // Increase size but cap it so text remains visible longer
+            yesSize += 0.35;
             yesBtn.style.transform = `scale(${yesSize})`;
-            
-            // Update Love Meter
-            meter.innerText = `Resistance: ${Math.min(noClicks * 10, 99)}%`;
-            
-            if(noClicks > 5) {
-                yesBtn.innerText = "JUST SAY YES!!";
-                yesBtn.style.backgroundColor = "#ff4d6d";
-                yesBtn.style.color = "white";
-            }
         }
 
         noBtn.addEventListener('mouseover', moveNo);
-        noBtn.addEventListener('click', moveNo);
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveNo(); });
 
         yesBtn.addEventListener('click', () => {
             document.getElementById('game-ui').classList.add('hidden');
             document.getElementById('success-ui').classList.remove('hidden');
-            meter.classList.add('hidden');
-            
-            // Heart shower explosion
-            for(let i=0; i<50; i++) {
-                setTimeout(createHeart, i * 40);
-            }
+            for(let i=0; i<40; i++) setTimeout(createHeart, i * 50);
         });
 
         function createHeart() {
@@ -186,9 +153,8 @@
             heart.classList.add('heart');
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
             document.body.appendChild(heart);
-            setTimeout(() => heart.remove(), 4000);
+            setTimeout(() => heart.remove(), 4500);
         }
     </script>
 </body>
