@@ -16,7 +16,7 @@
             margin: 0; padding: 0; height: 100%;
             background-color: var(--pink-light);
             background-image: radial-gradient(var(--pink-main) 0.8px, transparent 0.8px);
-            background-size: 25px(25px);
+            background-size: 25px 25px;
             font-family: 'Press Start 2P', cursive;
             overflow: hidden;
             display: flex; justify-content: center; align-items: center;
@@ -29,14 +29,12 @@
             text-align: center;
         }
 
-        /* The main window no longer hides the button */
         .window {
             background: white; border: 6px solid var(--pink-dark);
             box-shadow: 12px 12px 0px var(--pink-main);
             width: 90%; max-width: 450px; padding: 30px; text-align: center;
-            position: relative; 
-            z-index: 10;
-            /* overflow is VISIBLE so button can go outside the box */
+            position: relative; z-index: 10;
+            /* CRITICAL: Removed overflow:hidden so button can go outside this box */
             overflow: visible; 
         }
 
@@ -44,16 +42,14 @@
 
         .btn-wrap {
             display: flex; justify-content: center; align-items: center;
-            gap: 20px; min-height: 200px; 
-            position: relative;
-            /* Ensure the wrap doesn't clip the button either */
-            overflow: visible; 
+            gap: 20px; min-height: 200px; position: relative;
+            overflow: visible; /* Allows button to expand beyond the wrapper */
         }
 
         button {
             font-family: 'Press Start 2P', cursive;
             border: 4px solid var(--pink-dark);
-            cursor: pointer; padding: 15px; 
+            cursor: pointer; padding: 15px; z-index: 100;
             box-shadow: 4px 4px 0px var(--pink-main);
         }
 
@@ -63,7 +59,7 @@
             min-width: 100px;
             white-space: nowrap;
             position: relative;
-            z-index: 500; /* Keeps it above the window borders */
+            z-index: 500; /* Keeps it on top of the window frame */
         }
 
         #no-btn { background: white; color: var(--pink-dark); position: absolute; z-index: 600; }
@@ -130,6 +126,7 @@
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
 
+            // Slow growth so he can still see what's happening
             yesScale += 0.2; 
             yesBtn.style.transform = `scale(${yesScale})`;
 
