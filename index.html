@@ -32,7 +32,7 @@
 
         .heart-float {
             position: absolute; pointer-events: none; z-index: -1;
-            animation: floatUp 4.5s linear forwards; font-size: 20px;
+            animation: floatUp 4.5s linear forwards; font-size: 24px;
         }
         @keyframes floatUp {
             0% { transform: translateY(110vh) scale(0.5); opacity: 1; }
@@ -68,9 +68,10 @@
         /* YES button that eventually covers everything */
         #yes-btn {
             background: #b7e4c7; color: #2d6a4f;
-            transition: transform 0.15s ease-out;
+            transition: transform 0.15s ease-out, background-color 0.3s;
             min-width: 120px;
             position: relative;
+            display: flex; justify-content: center; align-items: center;
         }
 
         #no-btn {
@@ -86,7 +87,7 @@
 <body>
 
     <div id="overlay">
-        <img src="https://media.giphy.com/media/12BnpAj99ezEEY5wEg/giphy.gif" style="width: 100px; margin-bottom: 20px;">
+        <img src="https://media.giphy.com/media/12BnpAj99ezEEY5wEg/giphy.gif" style="width: 120px; margin-bottom: 20px;">
         <p style="font-size: 10px; margin-bottom: 20px;">A small gift from your girl...</p>
         <button onclick="startGame()" style="background: var(--pink-dark); color: white;">OPEN 💌</button>
     </div>
@@ -105,13 +106,13 @@
         </div>
 
         <div id="success-ui" class="hidden">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJqZ3R3eGd4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCH/v4S8L8Y369XInH3-fW/giphy.gif" class="pixel-bunny">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJqZ3R3eGd4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCH/4asRlBKdJaPeBahjcL/giphy.gif" class="pixel-bunny">
             <h1 style="color: #ff4d6d;">I WANNA BE YOURS! ❤️</h1>
             <p style="font-size: 10px; line-height: 2; color: #555;">
                 I love you more than words can say.<br>
                 Happy Valentine's Day, my favorite boy! ✨
             </p>
-            <button onclick="location.reload()" style="font-size: 8px; background: white; margin-top: 15px;">REPLAY</button>
+            <button onclick="location.reload()" style="font-size: 8px; background: white; margin-top: 25px; padding: 10px;">REPLAY</button>
         </div>
     </div>
 
@@ -125,7 +126,7 @@
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('youtube-player', {
                 height: '0', width: '0',
-                videoId: '39ov-z5GHWg', // "I Wanna Be Yours" slowed instrumental
+                videoId: '39ov-z5GHWg', 
                 events: { 'onReady': onPlayerReady }
             });
         }
@@ -135,7 +136,7 @@
         function startGame() {
             document.getElementById('overlay').style.display = 'none';
             if (player) player.playVideo();
-            setInterval(createHeart, 400);
+            setInterval(createHeart, 300);
         }
 
         function moveNo() {
@@ -146,19 +147,22 @@
             noBtn.style.left = x + 'px';
             noBtn.style.top = y + 'px';
 
-            // Grow YES button
-            yesScale += 0.8;
+            // Grow YES button aggressively
+            yesScale += 0.9;
             yesBtn.style.transform = `scale(${yesScale})`;
 
-            // If button is huge, fix it to screen center so it covers EVERYTHING
-            if (yesScale > 5) {
+            // Full screen takeover logic
+            if (yesScale > 4) {
                 yesBtn.innerText = "SAY YES!";
                 yesBtn.style.position = "fixed";
-                yesBtn.style.top = "50%";
-                yesBtn.style.left = "50%";
-                yesBtn.style.marginTop = `-${yesBtn.offsetHeight/2}px`;
-                yesBtn.style.marginLeft = `-${yesBtn.offsetWidth/2}px`;
+                yesBtn.style.top = "0";
+                yesBtn.style.left = "0";
+                yesBtn.style.width = "100vw";
+                yesBtn.style.height = "100vh";
+                yesBtn.style.transform = "none";
                 yesBtn.style.zIndex = "1000";
+                yesBtn.style.borderRadius = "0";
+                yesBtn.style.fontSize = "40px";
             }
         }
 
@@ -168,8 +172,8 @@
         yesBtn.addEventListener('click', () => {
             document.getElementById('game-ui').classList.add('hidden');
             document.getElementById('success-ui').classList.remove('hidden');
-            yesBtn.style.display = 'none'; // Hide the massive button
-            for(let i=0; i<50; i++) setTimeout(createHeart, i * 40);
+            yesBtn.style.display = 'none';
+            for(let i=0; i<60; i++) setTimeout(createHeart, i * 30);
         });
 
         function createHeart() {
